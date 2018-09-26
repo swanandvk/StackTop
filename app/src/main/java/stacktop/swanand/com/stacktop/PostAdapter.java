@@ -13,15 +13,20 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
 
     private final Context context;
     private List<Item> items=new ArrayList<>();
 
-    public PostAdapter(Context context) {
-        this.context = context;
 
+    private Picasso picasso;
+
+    public PostAdapter(Context context,Picasso picasso) {
+        this.context = context;
+        this.picasso = picasso;
     }
     public void addPosts(List<Item> items)
     {
@@ -40,7 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(PostViewHolder holder, int position) {
         holder.post_title.setText(items.get(position).getTitle());
         holder.timestamp.setText(android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss", items.get(position).getCreationDate()*1000L ));
-        Picasso.get().load(items.get(position).getOwner().getProfileImage()).into(holder.profile_image);
+        picasso.load(items.get(position).getOwner().getProfileImage()).into(holder.profile_image);
     }
 
     @Override

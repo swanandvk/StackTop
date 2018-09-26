@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     ApiInterface apiInterface;
+    Picasso picasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView =findViewById(R.id.recyclerview);
 
         apiInterface =StackApplication.get(this).getApiInterface();
+        picasso=StackApplication.get(this).getPicasso();
 
-
-        final PostAdapter postAdapter=new PostAdapter(this);
+        final PostAdapter postAdapter=new PostAdapter(this,picasso);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(postAdapter);
