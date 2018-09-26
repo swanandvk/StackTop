@@ -14,27 +14,28 @@ import stacktop.swanand.com.stacktop.ApiInterface;
 public class ApiInterfaceModule {
 
     @Provides
+    @StackApplicationScope
     public ApiInterface apiInterface(Retrofit retrofit){
-
-
-
 
         return retrofit.create(ApiInterface.class);
     }
 
     @Provides
+    @StackApplicationScope
     public Gson gson(){
         GsonBuilder gsonBuilder=new GsonBuilder();
         return gsonBuilder.create();
     }
 
     @Provides
+    @StackApplicationScope
     public Retrofit retrofit(OkHttpClient okHttpClient, Gson gson){
     return  new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl("https://api.stackexchange.com/2.2/")
                 .build();
+
 
     }
 }

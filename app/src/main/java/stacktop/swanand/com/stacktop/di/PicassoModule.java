@@ -21,6 +21,7 @@ public class PicassoModule {
     }
 
     @Provides
+    @StackApplicationScope
     public OkHttp3Downloader okHttp3Downloader(OkHttpClient okHttpClient){
        return new OkHttp3Downloader(okHttpClient);
     }

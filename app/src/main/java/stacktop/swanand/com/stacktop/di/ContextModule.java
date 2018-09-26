@@ -15,6 +15,7 @@ public class ContextModule {
     }
 
     @Provides
+    @StackApplicationScope
     public Context context(){
         return context;
     }
