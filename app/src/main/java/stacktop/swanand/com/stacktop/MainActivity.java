@@ -10,6 +10,9 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,18 +21,18 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
+    @Inject
     ApiInterface apiInterface;
+    @Inject
     Picasso picasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         recyclerView =findViewById(R.id.recyclerview);
 
-        apiInterface =StackApplication.get(this).getApiInterface();
-        picasso=StackApplication.get(this).getPicasso();
 
         final PostAdapter postAdapter=new PostAdapter(this,picasso);
 

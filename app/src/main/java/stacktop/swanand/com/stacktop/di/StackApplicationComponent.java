@@ -1,14 +1,26 @@
 package stacktop.swanand.com.stacktop.di;
 
-import com.squareup.picasso.Picasso;
+import android.app.Application;
 
+import dagger.BindsInstance;
 import dagger.Component;
-import stacktop.swanand.com.stacktop.ApiInterface;
+import dagger.android.AndroidInjectionModule;
+import stacktop.swanand.com.stacktop.StackApplication;
 
 @StackApplicationScope
-@Component(modules = {ApiInterfaceModule.class,PicassoModule.class})
+@Component(modules = {
+        AndroidInjectionModule.class,
+        StackApplicationModule.class,
+        ActivityBuilder.class
+})
 public interface StackApplicationComponent {
 
-  Picasso getPicasso();
-  ApiInterface getApiInterface();
+  @Component.Builder
+  interface Builder {
+    @BindsInstance
+    Builder application(Application application);
+    StackApplicationComponent build();
+  }
+
+  void inject(StackApplication app);
 }
