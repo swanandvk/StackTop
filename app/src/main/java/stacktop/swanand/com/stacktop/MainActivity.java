@@ -1,9 +1,7 @@
 package stacktop.swanand.com.stacktop;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 
 import com.squareup.picasso.Picasso;
 
@@ -12,6 +10,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         final PostAdapter postAdapter=new PostAdapter(this,picasso);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         recyclerView.setAdapter(postAdapter);
 
         final Map<String, String> params = new HashMap<>();
