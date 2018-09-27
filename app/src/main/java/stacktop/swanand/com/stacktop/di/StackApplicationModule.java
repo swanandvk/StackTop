@@ -20,9 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import stacktop.swanand.com.stacktop.ApiInterface;
 import timber.log.Timber;
 
-@Module(subcomponents = {
-        MainActivityComponent.class
-})
+@Module
 public class StackApplicationModule {
 
     @Provides
