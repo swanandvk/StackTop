@@ -1,4 +1,4 @@
-package stacktop.swanand.com.stacktop;
+package stacktop.swanand.com.stacktop.ui;
 
 import android.content.Context;
 
@@ -13,9 +13,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import androidx.recyclerview.widget.RecyclerView;
+import stacktop.swanand.com.stacktop.R;
+import stacktop.swanand.com.stacktop.datamodel.Item;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 

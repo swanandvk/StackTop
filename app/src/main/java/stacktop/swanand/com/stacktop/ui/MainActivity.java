@@ -1,4 +1,4 @@
-package stacktop.swanand.com.stacktop;
+package stacktop.swanand.com.stacktop.ui;
 
 import android.os.Bundle;
 
@@ -17,6 +17,9 @@ import dagger.android.AndroidInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import stacktop.swanand.com.stacktop.data.ApiInterface;
+import stacktop.swanand.com.stacktop.datamodel.Post;
+import stacktop.swanand.com.stacktop.R;
 
 public class MainActivity extends AppCompatActivity {
 

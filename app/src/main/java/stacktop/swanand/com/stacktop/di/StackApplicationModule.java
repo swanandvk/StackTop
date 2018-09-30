@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import stacktop.swanand.com.stacktop.ApiInterface;
+import stacktop.swanand.com.stacktop.data.ApiInterface;
 import timber.log.Timber;
 
 @Module

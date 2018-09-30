@@ -2,7 +2,7 @@ package stacktop.swanand.com.stacktop.di;
 
 import dagger.Module;
 import dagger.Provides;
-import stacktop.swanand.com.stacktop.MainActivity;
+import stacktop.swanand.com.stacktop.ui.MainActivity;
 
 @Module
 public class MainActivityModule {

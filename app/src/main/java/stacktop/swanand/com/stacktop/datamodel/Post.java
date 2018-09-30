@@ -1,4 +1,4 @@
-package stacktop.swanand.com.stacktop;
+package stacktop.swanand.com.stacktop.datamodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
