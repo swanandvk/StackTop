@@ -17,7 +17,7 @@ import dagger.android.AndroidInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import stacktop.swanand.com.stacktop.data.ApiInterface;
+import stacktop.swanand.com.stacktop.data.network.ApiService;
 import stacktop.swanand.com.stacktop.datamodel.Post;
 import stacktop.swanand.com.stacktop.R;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     @Inject
-    ApiInterface apiInterface;
+    ApiService apiInterface;
     @Inject
     Picasso picasso;
     @Override

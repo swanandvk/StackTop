@@ -17,7 +17,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import stacktop.swanand.com.stacktop.data.ApiInterface;
+import stacktop.swanand.com.stacktop.data.network.ApiService;
+import stacktop.swanand.com.stacktop.data.network.UrlManager;
 import timber.log.Timber;
 
 @Module
@@ -25,9 +26,9 @@ public class StackApplicationModule {
 
     @Provides
     @StackApplicationScope
-    public ApiInterface apiInterface(Retrofit retrofit){
+    public ApiService apiInterface(Retrofit retrofit){
 
-        return retrofit.create(ApiInterface.class);
+        return retrofit.create(ApiService.class);
     }
 
     @Provides
@@ -43,7 +44,7 @@ public class StackApplicationModule {
     return  new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("https://api.stackexchange.com/2.2/")
+                .baseUrl(UrlManager.baseUrl)
                 .build();
 
 
