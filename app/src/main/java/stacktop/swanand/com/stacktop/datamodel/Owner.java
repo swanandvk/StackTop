@@ -22,7 +22,7 @@ public class Owner {
     private String displayName;
     @SerializedName("link")
     @Expose
-    private String link;
+    private String olink;
     @SerializedName("accept_rate")
     @Expose
     private Integer acceptRate;
@@ -67,12 +67,12 @@ public class Owner {
         this.displayName = displayName;
     }
 
-    public String getLink() {
-        return link;
+    public String getOlink() {
+        return olink;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setOlink(String olink) {
+        this.olink = olink;
     }
 
     public Integer getAcceptRate() {

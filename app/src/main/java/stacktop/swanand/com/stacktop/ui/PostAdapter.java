@@ -46,7 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(PostViewHolder holder, int position) {
         holder.post_title.setText(items.get(position).getTitle());
-        holder.timestamp.setText(android.text.format.DateFormat.format("dd-MM-yyyy hh:mm:ss", items.get(position).getCreationDate()*1000L ));
+        holder.timestamp.setText(items.get(position).getCreationDate().toString());
         picasso.load(items.get(position).getOwner().getProfileImage()).into(holder.profile_image);
     }
 

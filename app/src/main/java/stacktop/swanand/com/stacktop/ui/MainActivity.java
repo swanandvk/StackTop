@@ -1,6 +1,7 @@
 package stacktop.swanand.com.stacktop.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 
 import com.squareup.picasso.Picasso;
@@ -17,6 +18,9 @@ import dagger.android.AndroidInjection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import stacktop.swanand.com.stacktop.AppExecutors;
+import stacktop.swanand.com.stacktop.data.database.AppDatabase;
+import stacktop.swanand.com.stacktop.data.database.ItemDao;
 import stacktop.swanand.com.stacktop.data.network.ApiService;
 import stacktop.swanand.com.stacktop.datamodel.Post;
 import stacktop.swanand.com.stacktop.R;
@@ -29,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     ApiService apiInterface;
     @Inject
     Picasso picasso;
+    AppDatabase database;
+    ItemDao itemDao;
+    AppExecutors executors;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -36,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView =findViewById(R.id.recyclerview);
+
+        database = AppDatabase.getInstance(getApplicationContext());
+        itemDao = database.itemDao();
 
 
         final PostAdapter postAdapter=new PostAdapter(this,picasso);
@@ -55,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
 
                postAdapter.addPosts(response.body().getItems());
                postAdapter.notifyDataSetChanged();
+
+               executors =AppExecutors.getInstance();
+              executors.diskIO().execute(()->{
+
+                  itemDao.bulkInsert(response.body().getItems());
+
+
+                  Log.d("DBTEST",itemDao.getAll().toString());
+              });
+
+
+
            }
 
            @Override

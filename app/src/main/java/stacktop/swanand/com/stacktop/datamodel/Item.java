@@ -5,14 +5,24 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "questions")
 public class Item {
 
+    @Ignore
     @SerializedName("tags")
     @Expose
     private List<String> tags = null;
+
+    @Embedded
     @SerializedName("owner")
     @Expose
     private Owner owner;
+
     @SerializedName("is_answered")
     @Expose
     private Boolean isAnswered;
@@ -31,6 +41,8 @@ public class Item {
     @SerializedName("creation_date")
     @Expose
     private Integer creationDate;
+
+    @PrimaryKey
     @SerializedName("question_id")
     @Expose
     private Integer questionId;
@@ -49,6 +61,23 @@ public class Item {
     @SerializedName("closed_reason")
     @Expose
     private String closedReason;
+
+
+    public Item(Owner owner, Boolean isAnswered, Integer viewCount, Integer answerCount, Integer score, Integer lastActivityDate, Integer creationDate, Integer questionId, String link, String title, Integer lastEditDate, Integer closedDate, String closedReason) {
+        this.owner = owner;
+        this.isAnswered = isAnswered;
+        this.viewCount = viewCount;
+        this.answerCount = answerCount;
+        this.score = score;
+        this.lastActivityDate = lastActivityDate;
+        this.creationDate = creationDate;
+        this.questionId = questionId;
+        this.link = link;
+        this.title = title;
+        this.lastEditDate = lastEditDate;
+        this.closedDate = closedDate;
+        this.closedReason = closedReason;
+    }
 
     public List<String> getTags() {
         return tags;
