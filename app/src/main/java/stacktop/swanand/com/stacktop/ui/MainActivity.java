@@ -7,11 +7,15 @@ import android.util.Log;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
@@ -19,9 +23,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import stacktop.swanand.com.stacktop.AppExecutors;
+import stacktop.swanand.com.stacktop.data.Repository;
 import stacktop.swanand.com.stacktop.data.database.AppDatabase;
 import stacktop.swanand.com.stacktop.data.database.ItemDao;
 import stacktop.swanand.com.stacktop.data.network.ApiService;
+import stacktop.swanand.com.stacktop.datamodel.Item;
 import stacktop.swanand.com.stacktop.datamodel.Post;
 import stacktop.swanand.com.stacktop.R;
 
@@ -36,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase database;
     ItemDao itemDao;
     AppExecutors executors;
+
+    private MainActivityViewModel mViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -44,47 +52,31 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView =findViewById(R.id.recyclerview);
 
-        database = AppDatabase.getInstance(getApplicationContext());
-        itemDao = database.itemDao();
-
-
         final PostAdapter postAdapter=new PostAdapter(this,picasso);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         recyclerView.setAdapter(postAdapter);
 
-        final Map<String, String> params = new HashMap<>();
-        params.put("order","desc");
-        params.put("sort","activity");
-        params.put("site","stackoverflow");
-
-       Call<Post> call=apiInterface.getQuestions(params);
-       call.enqueue(new Callback<Post>() {
-           @Override
-           public void onResponse(Call<Post> call, Response<Post> response) {
-
-               postAdapter.addPosts(response.body().getItems());
-               postAdapter.notifyDataSetChanged();
-
-               executors =AppExecutors.getInstance();
-              executors.diskIO().execute(()->{
-
-                  itemDao.bulkInsert(response.body().getItems());
+        database = AppDatabase.getInstance(getApplicationContext());
+        itemDao = database.itemDao();
+        executors =AppExecutors.getInstance();
+        Repository repository = Repository.getInstance(itemDao,apiInterface,executors);
 
 
-                  Log.d("DBTEST",itemDao.getAll().toString());
-              });
+        MainActivityViewModelFactory factory =new MainActivityViewModelFactory(repository);
 
+        mViewModel= ViewModelProviders.of(this,factory).get(MainActivityViewModel.class);
 
+       executors =AppExecutors.getInstance();
+       executors.diskIO().execute(()->{
 
-           }
+           List<Item> data = mViewModel.getQuestions();
 
-           @Override
-           public void onFailure(Call<Post> call, Throwable t) {
+           executors.mainThread().execute(()->{
+               postAdapter.addPosts(data);
 
-           }
+           });
        });
-
 
 
     }
