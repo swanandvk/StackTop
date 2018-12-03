@@ -34,6 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     {
         this.items=items;
         notifyDataSetChanged();
+
     }
 
 

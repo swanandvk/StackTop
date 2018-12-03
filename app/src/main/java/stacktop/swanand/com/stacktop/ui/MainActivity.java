@@ -1,36 +1,22 @@
 package stacktop.swanand.com.stacktop.ui;
 
 import android.os.Bundle;
-import android.util.Log;
-
 
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import stacktop.swanand.com.stacktop.AppExecutors;
-
+import stacktop.swanand.com.stacktop.R;
 import stacktop.swanand.com.stacktop.data.Repository;
 import stacktop.swanand.com.stacktop.data.database.AppDatabase;
 import stacktop.swanand.com.stacktop.data.database.ItemDao;
 import stacktop.swanand.com.stacktop.data.network.ApiService;
-import stacktop.swanand.com.stacktop.datamodel.Item;
-import stacktop.swanand.com.stacktop.datamodel.Post;
-import stacktop.swanand.com.stacktop.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewModel.getQuestions().observe(this, Items -> {
             postAdapter.addPosts(Items);
+
         });
 
 
