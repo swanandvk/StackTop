@@ -9,7 +9,7 @@ public class MainActivityModule {
 
 
     @Provides
-    MainActivity provideMainView(MainActivity mainActivity){
+    MainActivity provideMainView(MainActivity mainActivity) {
         return mainActivity;
     }
 

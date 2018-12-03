@@ -23,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import stacktop.swanand.com.stacktop.AppExecutors;
+
 import stacktop.swanand.com.stacktop.data.Repository;
 import stacktop.swanand.com.stacktop.data.database.AppDatabase;
 import stacktop.swanand.com.stacktop.data.database.ItemDao;
@@ -44,39 +45,33 @@ public class MainActivity extends AppCompatActivity {
     AppExecutors executors;
 
     private MainActivityViewModel mViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView =findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
 
-        final PostAdapter postAdapter=new PostAdapter(this,picasso);
+        final PostAdapter postAdapter = new PostAdapter(this, picasso);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(postAdapter);
 
         database = AppDatabase.getInstance(getApplicationContext());
         itemDao = database.itemDao();
-        executors =AppExecutors.getInstance();
-        Repository repository = Repository.getInstance(itemDao,apiInterface,executors);
+        executors = AppExecutors.getInstance();
+        Repository repository = Repository.getInstance(itemDao, apiInterface, executors);
 
 
-        MainActivityViewModelFactory factory =new MainActivityViewModelFactory(repository);
+        MainActivityViewModelFactory factory = new MainActivityViewModelFactory(repository);
 
-        mViewModel= ViewModelProviders.of(this,factory).get(MainActivityViewModel.class);
+        mViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
 
-       executors =AppExecutors.getInstance();
-       executors.diskIO().execute(()->{
-
-           List<Item> data = mViewModel.getQuestions();
-
-           executors.mainThread().execute(()->{
-               postAdapter.addPosts(data);
-
-           });
-       });
+        mViewModel.getQuestions().observe(this, Items -> {
+            postAdapter.addPosts(Items);
+        });
 
 
     }

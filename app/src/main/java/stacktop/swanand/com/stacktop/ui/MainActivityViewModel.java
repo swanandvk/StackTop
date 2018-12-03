@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import stacktop.swanand.com.stacktop.data.Repository;
 import stacktop.swanand.com.stacktop.datamodel.Item;
@@ -11,11 +12,10 @@ import stacktop.swanand.com.stacktop.datamodel.Item;
 public class MainActivityViewModel extends ViewModel {
 
 
-
-    List<Item> questions ;
+    LiveData<List<Item>> questions;
     private final Repository mRepository;
 
-    public MainActivityViewModel( Repository repository) {
+    public MainActivityViewModel(Repository repository) {
 
         mRepository = repository;
 
@@ -24,8 +24,8 @@ public class MainActivityViewModel extends ViewModel {
 
     }
 
-    public List<Item> getQuestions() {
+    public LiveData<List<Item>> getQuestions() {
 
-        return mRepository.getQuestions();
+        return questions;
     }
 }

@@ -2,6 +2,7 @@ package stacktop.swanand.com.stacktop.data.database;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Index;
 import androidx.room.Insert;
@@ -14,7 +15,7 @@ public interface ItemDao {
 
 
     @Query("SELECT * FROM questions")
-    List<Item> getAll();
+    LiveData<List<Item>> getAll();
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

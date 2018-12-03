@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import stacktop.swanand.com.stacktop.datamodel.Item;
 
-@Database(entities = {Item.class},version = 1)
+@Database(entities = {Item.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
@@ -17,6 +17,7 @@ public abstract class AppDatabase extends RoomDatabase {
     // For Singleton instantiation
     private static final Object LOCK = new Object();
     private static AppDatabase sInstance;
+
     public static AppDatabase getInstance(Context context) {
         Log.d(LOG_TAG, "Getting the database");
         if (sInstance == null) {
@@ -28,6 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return sInstance;
     }
+
     // The associated DAOs for the database
     public abstract ItemDao itemDao();
 }
