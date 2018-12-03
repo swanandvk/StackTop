@@ -1,9 +1,9 @@
 # StackTop
-=======================
+===
  Android app with Stackoverflow api using MVVM architecture and Google Android Architecture Components ,Dagger2  
  
  ## Important features
- ---
+ 
  
  * Used Dagger 2 for dependency injection
  * Used Android Architecture Components
