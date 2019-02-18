@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import stacktop.swanand.com.stacktop.datamodel.Item;
 
-@Database(entities = {Item.class}, version = 1)
+@Database(entities = {Item.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();

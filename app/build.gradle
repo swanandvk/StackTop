@@ -8,7 +8,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -34,11 +34,11 @@ dependencies {
     implementation "androidx.cardview:cardview:$androidx_version"
     implementation "android.arch.navigation:navigation-fragment:$navigation_fragment_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
-    implementation "com.android.support.constraint:constraint-layout:$constraint_layout"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
 
     testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "com.android.support.test:runner:$support_test_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test:runner:$support_test_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -54,10 +54,10 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.16'
 
-    implementation "android.arch.persistence.room:runtime:$arch_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$arch_version"
-    implementation "android.arch.lifecycle:runtime:$arch_version"
-    implementation "android.arch.lifecycle:extensions:$arch_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$arch_version"
+    implementation "androidx.room:room-runtime:$arch_version"
+    annotationProcessor "androidx.room:room-compiler:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$arch_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$arch_version"
 
 }
