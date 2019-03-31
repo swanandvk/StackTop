@@ -17,6 +17,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import stacktop.swanand.com.stacktop.AppExecutors;
+import stacktop.swanand.com.stacktop.data.Repository;
+import stacktop.swanand.com.stacktop.data.database.AppDatabase;
 import stacktop.swanand.com.stacktop.data.network.ApiService;
 import stacktop.swanand.com.stacktop.data.network.UrlManager;
 import timber.log.Timber;
@@ -105,4 +108,23 @@ public class StackApplicationModule {
     public OkHttp3Downloader okHttp3Downloader(OkHttpClient okHttpClient){
         return new OkHttp3Downloader(okHttpClient);
     }
+
+    @Provides
+    @StackApplicationScope
+    public AppDatabase appDatabase(Context context){
+        return AppDatabase.getInstance(context);
+    }
+
+    @Provides
+    public  AppExecutors appExecutors(){
+        return AppExecutors.getInstance();
+    }
+
+    @Provides
+    @StackApplicationScope
+    public Repository repository(AppDatabase appDatabase, ApiService apiService, AppExecutors executors){
+        return  Repository.getInstance(appDatabase,apiService,executors);
+    }
+
+
 }

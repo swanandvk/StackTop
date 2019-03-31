@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import stacktop.swanand.com.stacktop.AppExecutors;
+import stacktop.swanand.com.stacktop.data.database.AppDatabase;
 import stacktop.swanand.com.stacktop.data.database.ItemDao;
 import stacktop.swanand.com.stacktop.data.network.ApiService;
 import stacktop.swanand.com.stacktop.datamodel.Item;
@@ -26,6 +27,7 @@ public class Repository {
 
     private static Repository sInstance;
 
+    private AppDatabase database;
     private final ItemDao mItemDao;
     private final ApiService mApiService;
     private final AppExecutors mExecutors;
@@ -33,10 +35,14 @@ public class Repository {
 
     List<Item> questions = new ArrayList<>();
 
-    private Repository(ItemDao itemDao,
+    private void insertIntoDatabase(List<Item> items){
+        mItemDao.bulkInsert(items);
+    }
+
+    private Repository(AppDatabase database,
                        ApiService apiService,
                        AppExecutors executors) {
-        mItemDao = itemDao;
+        mItemDao = database.itemDao();
         mApiService = apiService;
         mExecutors = executors;
 
@@ -51,8 +57,8 @@ public class Repository {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 mExecutors.diskIO().execute(() -> {
-                    itemDao.bulkInsert(response.body().getItems());
 
+                    insertIntoDatabase(response.body().getItems());
                     Log.d("DBTEST", "New values inserted");
 
                 });
@@ -67,13 +73,13 @@ public class Repository {
     }
 
     public synchronized static Repository getInstance(
-            ItemDao itemDao,
+            AppDatabase database,
             ApiService apiService,
             AppExecutors executors) {
         Log.d(LOG_TAG, "Getting the repository");
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new Repository(itemDao, apiService,
+                sInstance = new Repository(database, apiService,
                         executors);
                 Log.d(LOG_TAG, "Made new repository");
             }
